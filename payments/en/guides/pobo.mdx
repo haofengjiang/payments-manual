@@ -12,7 +12,7 @@ Two reviews must pass before you can create a POBO payout, and they are independ
 
 Both can be submitted through the API. Submission through the Payments App web interface is expected in October 2026.
 
-This guide shows the POBO implementation sequence with the Cobo WaaS 2.0 Python SDK (`cobo_waas2`): SDK initialization, KYC document upload and submission (the payer side), recipient bank account document upload and destination creation (the payee side), and Off-ramp payout creation. For concept details and operation-specific schemas, use the related guides and API references linked from each section.
+This guide shows the POBO implementation sequence with the Cobo WaaS 2.0 Python SDK (`cobo_waas2`): SDK initialization, KYC document upload and fiat entry KYC creation (the payer side), recipient bank account document upload and destination creation (the payee side), and Off-ramp payout creation. For concept details and operation-specific schemas, use the related guides and API references linked from each section.
 
 ## Prerequisites
 
@@ -44,8 +44,8 @@ api_instance = PaymentApi(api_client)
 <img src="/payments/en/images/guides/pobo-flow.svg" className="diagram" alt="POBO integration flow: a one-time setup registering the entity you pay from and the recipient bank account, then a per-payout loop" />
 
 1. Upload KYC and bank account documents with [Upload file v2](/payments/en/api-references/payment/upload-file-v2) and save the returned `file_id` values.
-2. Submit KYC information with [Submit merchant KYC](/payments/en/api-references/payment/submit-merchant-kyc).
-3. Create a bank-account destination with [Create destination](/payments/en/api-references/payment/create-destination). For destination concepts and review requirements, see [Destinations](/payments/en/guides/destinations).
+2. Create the paying entity's fiat entry KYC with [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc). Retrieve records with [List all fiat entry KYC](/payments/en/api-references/payment/list-fiat-entry-kyc) or [Get fiat entry KYC](/payments/en/api-references/payment/get-fiat-entry-kyc), and revise a record with [Update fiat entry KYC](/payments/en/api-references/payment/update-fiat-entry-kyc).
+3. Create a bank-account destination with [Create destination](/payments/en/api-references/payment/create-destination), and pass the returned `fiat_entry_kyc_id`. For destination concepts and review requirements, see [Destinations](/payments/en/guides/destinations).
 4. Create an Off-ramp payout with [Create payout](/payments/en/api-references/payment/create-payout). For payout behavior, see [Off-ramp](/payments/en/guides/fiat-payouts).
 
 ## Upload KYC and bank account documents
@@ -80,66 +80,65 @@ def create_file(file_path: str):
     return response
 ```
 
-## Submit KYC information
+## Create fiat entry KYC
 
 KYC (Know Your Customer) verifies the entity the payout comes from: that it is real, who ultimately controls it, and whether it can pay out through Cobo.
 
-Call `submit_merchant_kyc` to submit KYC information. The example submits:
+Call `create_fiat_entry_kyc` to create the fiat entry KYC record. The example submits:
 
 - Company entity information
 - Company attachments
 - Legal representative information
 - Ultimate beneficial owner information
 
-See [Submit merchant KYC](/payments/en/api-references/payment/submit-merchant-kyc) for the complete schema.
+See [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc) for the complete schema. Save the returned `fiat_entry_kyc_id` and pass it when you create the bank-account destination. To list records, call [List all fiat entry KYC](/payments/en/api-references/payment/list-fiat-entry-kyc). To retrieve one record, call [Get fiat entry KYC](/payments/en/api-references/payment/get-fiat-entry-kyc). To revise a record, call [Update fiat entry KYC](/payments/en/api-references/payment/update-fiat-entry-kyc).
 
 ```python
-def submit_merchant_kyc():
+def create_fiat_entry_kyc():
     file_id = "44444444-4444-4444-4444-444444444444"
     card_front_file_id = "55555555-5555-5555-5555-555555555555"
     card_back_file_id = "33333333-3333-3333-3333-333333333333"
     fic_file_id = "11111111-1111-1111-1111-111111111111"
 
-    response = api_instance.submit_merchant_kyc(
-        merchant_id="M1001",
-        submit_merchant_kyc=SubmitMerchantKyc(
-            merchant_type=MerchantKycMerchantType.B2B,
+    response = api_instance.create_fiat_entry_kyc(
+        create_fiat_entry_kyc=CreateFiatEntryKyc(
+            merchant_type=FiatEntryKycMerchantType.B2B,
             country="HKG",
             industry=["Tangibles Goods", "Automotive"],
-            company_info=MerchantKycCompanyInfo(
-                company_type=MerchantKycCompanyType.LIMITED_COMPANY,
+            company_info=FiatEntryKycCompanyInfo(
+                company_type=FiatEntryKycCompanyType.LIMITED_COMPANY,
                 listed=False,
                 attachments=[
-                    MerchantKycCompanyAttachment(
+                    FiatEntryKycCompanyAttachment(
                         file_id=file_id,
-                        file_type=MerchantKycCompanyAttachmentFileType.CI,
+                        file_type=FiatEntryKycCompanyAttachmentFileType.CI,
                     ),
-                    MerchantKycCompanyAttachment(
+                    FiatEntryKycCompanyAttachment(
                         file_id=file_id,
-                        file_type=MerchantKycCompanyAttachmentFileType.BR,
+                        file_type=FiatEntryKycCompanyAttachmentFileType.BR,
                     ),
-                    MerchantKycCompanyAttachment(
+                    FiatEntryKycCompanyAttachment(
                         file_id=file_id,
-                        file_type=MerchantKycCompanyAttachmentFileType.NNC1,
+                        file_type=FiatEntryKycCompanyAttachmentFileType.NNC1,
                     ),
-                    MerchantKycCompanyAttachment(
+                    FiatEntryKycCompanyAttachment(
                         file_id=file_id,
-                        file_type=MerchantKycCompanyAttachmentFileType.ANNUAL_RETURN,
+                        file_type=FiatEntryKycCompanyAttachmentFileType.ANNUAL_RETURN,
                     ),
-                    MerchantKycCompanyAttachment(
+                    FiatEntryKycCompanyAttachment(
                         file_id=file_id,
-                        file_type=MerchantKycCompanyAttachmentFileType.AOA,
+                        file_type=FiatEntryKycCompanyAttachmentFileType.AOA,
                     ),
-                    MerchantKycCompanyAttachment(
+                    FiatEntryKycCompanyAttachment(
                         file_id=file_id,
-                        file_type=MerchantKycCompanyAttachmentFileType.BAP,
+                        file_type=FiatEntryKycCompanyAttachmentFileType.BAP,
                     ),
-                    MerchantKycCompanyAttachment(
+                    FiatEntryKycCompanyAttachment(
                         file_id=file_id,
-                        file_type=MerchantKycCompanyAttachmentFileType.SSC,
+                        file_type=FiatEntryKycCompanyAttachmentFileType.SSC,
                     ),
                 ],
-                operation_address=MerchantKycAddress(
+                operation_address=FiatEntryKycAddress(
                     country="HKG",
                     state="New Territories",
                     city="Example District",
@@ -152,35 +151,35 @@ def submit_merchant_kyc():
                 establish_date="20200101",
                 commencement_date="20200101",
                 valid_period="20300101",
-                register_address=MerchantKycAddress(
+                register_address=FiatEntryKycAddress(
                     country="HKG",
                     state="Hong Kong Island",
                     city="Example District",
                     postcode="999077",
                     line1="Room 202, 2/F, Example Tower, 2 Example Street",
                 ),
-                legal_info=MerchantKycPersonInfo(
+                legal_info=FiatEntryKycPersonInfo(
                     name="Chan Tai Man",
                     name_en="CHAN TAI MAN",
                     attachments=[
-                        MerchantKycPersonAttachment(
+                        FiatEntryKycPersonAttachment(
                             file_id=card_front_file_id,
-                            file_type=MerchantKycPersonAttachmentFileType.HK_PID,
+                            file_type=FiatEntryKycPersonAttachmentFileType.HK_PID,
                         ),
-                        MerchantKycPersonAttachment(
+                        FiatEntryKycPersonAttachment(
                             file_id=card_back_file_id,
-                            file_type=MerchantKycPersonAttachmentFileType.BACK,
+                            file_type=FiatEntryKycPersonAttachmentFileType.BACK,
                         ),
-                        MerchantKycPersonAttachment(
+                        FiatEntryKycPersonAttachment(
                             file_id=fic_file_id,
-                            file_type=MerchantKycPersonAttachmentFileType.FIC,
+                            file_type=FiatEntryKycPersonAttachmentFileType.FIC,
                         ),
                     ],
                     id_number="A123456(7)",
                     date_of_birth="19800101",
                     issue_date="20200101",
                     expiration_date="20300101",
-                    residential_address=MerchantKycAddress(
+                    residential_address=FiatEntryKycAddress(
                         country="HKG",
                         state="New Territories",
                         city="Example District",
@@ -189,28 +188,28 @@ def submit_merchant_kyc():
                     ),
                 ),
                 ubo_infos=[
-                    MerchantKycPersonInfo(
+                    FiatEntryKycPersonInfo(
                         name="Wong Siu Ming",
                         name_en="WONG SIU MING",
                         attachments=[
-                            MerchantKycPersonAttachment(
+                            FiatEntryKycPersonAttachment(
                                 file_id=card_front_file_id,
-                                file_type=MerchantKycPersonAttachmentFileType.HK_PID,
+                                file_type=FiatEntryKycPersonAttachmentFileType.HK_PID,
                             ),
-                            MerchantKycPersonAttachment(
+                            FiatEntryKycPersonAttachment(
                                 file_id=card_back_file_id,
-                                file_type=MerchantKycPersonAttachmentFileType.BACK,
+                                file_type=FiatEntryKycPersonAttachmentFileType.BACK,
                             ),
-                            MerchantKycPersonAttachment(
+                            FiatEntryKycPersonAttachment(
                                 file_id=fic_file_id,
-                                file_type=MerchantKycPersonAttachmentFileType.FIC,
+                                file_type=FiatEntryKycPersonAttachmentFileType.FIC,
                             ),
                         ],
                         id_number="B234567(8)",
                         date_of_birth="19900101",
                         issue_date="20200101",
                         expiration_date="20300101",
-                        residential_address=MerchantKycAddress(
+                        residential_address=FiatEntryKycAddress(
                             country="HKG",
                             state="New Territories",
                             city="Example District",
@@ -237,6 +236,7 @@ For country-specific SWIFT bank-account requirements, see [Bank account requirem
 
 Key settings:
 
+- **Fiat entry KYC**: set `fiat_entry_kyc_id` to the ID returned by [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc).
 - **Account details**: account number (`account_number`), SWIFT code, IBAN, currency (USD), and account holder name (`beneficiary_name`).
 - **Bank details**: bank name, branch code (`bank_branch_code`), and the bank's address, country, province, and city.
 - **Payment method and holder type**: set `BankAccountPaymentMethod.SWIFT` and `BankAccountHolderType.COMPANY`.
@@ -274,7 +274,7 @@ def create_bank_account():
                     contract_file_id="11111111-1111-1111-1111-111111111111",
                 )
             ],
-            merchant_id="M1008",
+            fiat_entry_kyc_id="f47ac10b-58cc-4372-a567-0e02b2c3d479",
             country="HKG",
             email="finance@example.com",
             contact_address="Unit 101, 1/F, Example Commercial Building, 1 Example Road",

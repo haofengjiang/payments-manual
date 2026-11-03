@@ -3,7 +3,7 @@ title: "各国家和地区 KYC 要求"
 lang: "zh-hans"
 ---
 
-付款主体在发起 POBO 付款前需通过 KYC 审核。提交时 [Submit merchant KYC](/payments/en/api-references/payment/submit-merchant-kyc) 的字段名在所有支持的国家和地区都相同，只有三处会随主体所在国家和地区变化：必需的附件类型（`file_type`）、可用的主证件类型，以及中国香港的地址取值校验。
+付款主体在发起 POBO 付款前需通过 KYC 审核。提交时 [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc) 的字段名在所有支持的国家和地区都相同，只有三处会随主体所在国家和地区变化：必需的附件类型（`file_type`）、可用的主证件类型，以及中国香港的地址取值校验。
 
 本指南逐个列出这三处差异，覆盖中国香港（`HKG`）、中国台湾（`TWN`）、马来西亚（`MYS`）、菲律宾（`PHL`）、印度尼西亚（`IDN`）、越南（`VNM`）、泰国（`THA`）、新加坡（`SGP`）、英国（`GBR`）、墨西哥（`MEX`）、美国（`USA`）。
 
@@ -11,7 +11,8 @@ lang: "zh-hans"
 
 - 在提交 KYC 信息前，准备付款主体的公司文件或个人身份证明文件。
 - 通过 [Upload file v2](/payments/en/api-references/payment/upload-file-v2) 上传每个必需文件，并在 KYC 请求中使用返回的 `file_id`。
-- 通过 [Submit merchant KYC](/payments/en/api-references/payment/submit-merchant-kyc) 提交 KYC 信息。
+- 通过 [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc) 创建 Fiat entry KYC 记录。
+- 通过 [List all fiat entry KYC](/payments/en/api-references/payment/list-fiat-entry-kyc) 或 [Get fiat entry KYC](/payments/en/api-references/payment/get-fiat-entry-kyc) 查询记录，通过 [Update fiat entry KYC](/payments/en/api-references/payment/update-fiat-entry-kyc) 修改记录。
 - 如需查看完整 POBO 流程，请参考 [POBO（全球付款）](/payments/cn/guides/pobo)。
 
 ## 共享请求结构
@@ -20,8 +21,8 @@ KYC 请求在所有支持国家和地区使用一致的 JSON key。国家和地�
 
 | 范围 | 字段 |
 | --- | --- |
-| 公司顶层请求 | `merchant_type`、`country`、`merchant_id`、`industry`、`company_info` |
-| 个人顶层请求 | `merchant_type`、`country`、`merchant_id`、`industry`、`individual_info` |
+| 公司顶层请求 | `merchant_type`、`country`、`industry`、`company_info` |
+| 个人顶层请求 | `merchant_type`、`country`、`industry`、`individual_info` |
 | 地址对象 | `country`、`state`、`city`、`postcode`、`line1` |
 | 人员信息 | `name`、`name_en`、`id_number`、`date_of_birth`、`issue_date`、`expiration_date`、`residential_address`、`attachments` |
 

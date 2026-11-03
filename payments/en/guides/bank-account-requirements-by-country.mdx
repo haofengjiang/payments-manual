@@ -23,14 +23,14 @@ Use the following destination type and holder type values for POBO bank-account 
 | Company | `Organization` | `Company` |
 | Individual | `Individual` | `Personal` |
 
-The top-level `CreateDestinationRequest` requires the destination name, destination type, bank-account list, merchant ID, beneficiary country, contact email, and contact address.
+The top-level `CreateDestinationRequest` requires the destination name, destination type, bank-account list, fiat entry KYC ID, beneficiary country, contact email, and contact address.
 
 | Field | Requirement |
 | --- | --- |
 | `destination_name` | Required. Name that identifies the destination. |
 | `destination_type` | Required. Use `Organization` for a company entity or `Individual` for an individual entity. |
 | `bank_accounts` | Required. List of bank-account objects. |
-| `merchant_id` | Required. Merchant ID associated with the destination. |
+| `fiat_entry_kyc_id` | Required. Fiat entry KYC ID of the paying entity. Use the `fiat_entry_kyc_id` returned by [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc). |
 | `country` | Required. Beneficiary country in ISO3 format. |
 | `email` | Required. Contact email for the destination. |
 | `contact_address` | Required. Contact address for the destination. |

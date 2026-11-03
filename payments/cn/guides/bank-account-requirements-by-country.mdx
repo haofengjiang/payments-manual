@@ -23,14 +23,14 @@ lang: "zh-hans"
 | 公司 | `Organization` | `Company` |
 | 个人 | `Individual` | `Personal` |
 
-顶层 `CreateDestinationRequest` 需要提供转出目的地名称、转出目的地类型、银行账户列表、商户 ID、受益人国家或地区、联系邮箱和联系地址。
+顶层 `CreateDestinationRequest` 需要提供转出目的地名称、转出目的地类型、银行账户列表、Fiat entry KYC ID、受益人国家或地区、联系邮箱和联系地址。
 
 | 字段 | 要求 |
 | --- | --- |
 | `destination_name` | 必传。用于识别转出目的地的名称。 |
 | `destination_type` | 必传。公司主体使用 `Organization`，个人主体使用 `Individual`。 |
 | `bank_accounts` | 必传。银行账户对象列表。 |
-| `merchant_id` | 必传。与转出目的地关联的商户 ID。 |
+| `fiat_entry_kyc_id` | 必传。付款主体的 Fiat entry KYC ID。使用 [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc) 返回的 `fiat_entry_kyc_id`。 |
 | `country` | 必传。受益人国家或地区，使用 ISO3 格式。 |
 | `email` | 必传。转出目的地联系人邮箱。 |
 | `contact_address` | 必传。转出目的地联系地址。 |

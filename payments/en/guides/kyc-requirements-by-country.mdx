@@ -3,7 +3,7 @@ title: "KYC requirements by country"
 lang: "en"
 ---
 
-A paying entity must pass KYC review before it can create a POBO payout. The field names in [Submit merchant KYC](/payments/en/api-references/payment/submit-merchant-kyc) are the same in every supported country and region; only three things change with the entity's location: which attachment types (`file_type`) are required, which primary identity documents are accepted, and how Hong Kong addresses are validated.
+A paying entity must pass KYC review before it can create a POBO payout. The field names in [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc) are the same in every supported country and region; only three things change with the entity's location: which attachment types (`file_type`) are required, which primary identity documents are accepted, and how Hong Kong addresses are validated.
 
 This guide lists those three differences for Hong Kong SAR (`HKG`), Taiwan, China (`TWN`), Malaysia (`MYS`), Philippines (`PHL`), Indonesia (`IDN`), Vietnam (`VNM`), Thailand (`THA`), Singapore (`SGP`), United Kingdom (`GBR`), Mexico (`MEX`), and the United States (`USA`).
 
@@ -11,7 +11,8 @@ This guide lists those three differences for Hong Kong SAR (`HKG`), Taiwan, Chin
 
 - Prepare the paying entity's company documents or individual identity documents before you submit KYC information.
 - Upload each required file with [Upload file v2](/payments/en/api-references/payment/upload-file-v2) and use the returned `file_id` values in the KYC request.
-- Submit KYC information with [Submit merchant KYC](/payments/en/api-references/payment/submit-merchant-kyc).
+- Create the fiat entry KYC record with [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc).
+- Retrieve records with [List all fiat entry KYC](/payments/en/api-references/payment/list-fiat-entry-kyc) or [Get fiat entry KYC](/payments/en/api-references/payment/get-fiat-entry-kyc), and revise a record with [Update fiat entry KYC](/payments/en/api-references/payment/update-fiat-entry-kyc).
 - For the end-to-end POBO sequence, see [Payouts on behalf of (POBO)](/payments/en/guides/pobo).
 
 ## Shared request structure
@@ -20,8 +21,8 @@ The KYC request uses consistent JSON keys for all supported countries. Country-s
 
 | Scope | Fields |
 | --- | --- |
-| Top-level company request | `merchant_type`, `country`, `merchant_id`, `industry`, `company_info` |
-| Top-level individual request | `merchant_type`, `country`, `merchant_id`, `industry`, `individual_info` |
+| Top-level company request | `merchant_type`, `country`, `industry`, `company_info` |
+| Top-level individual request | `merchant_type`, `country`, `industry`, `individual_info` |
 | Address objects | `country`, `state`, `city`, `postcode`, `line1` |
 | Person information | `name`, `name_en`, `id_number`, `date_of_birth`, `issue_date`, `expiration_date`, `residential_address`, `attachments` |
 
