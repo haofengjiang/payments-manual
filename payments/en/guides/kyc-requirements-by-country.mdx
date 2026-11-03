@@ -5,7 +5,7 @@ lang: "en"
 
 A paying entity must pass KYC review before it can create a POBO payout. The field names in [Create fiat entry KYC](/payments/en/api-references/payment/create-fiat-entry-kyc) are the same in every supported country and region; only three things change with the entity's location: which attachment types (`file_type`) are required, which primary identity documents are accepted, and how Hong Kong addresses are validated.
 
-This guide lists those three differences for Hong Kong SAR (`HKG`), Taiwan, China (`TWN`), Malaysia (`MYS`), Philippines (`PHL`), Indonesia (`IDN`), Vietnam (`VNM`), Thailand (`THA`), Singapore (`SGP`), United Kingdom (`GBR`), Mexico (`MEX`), and the United States (`USA`).
+This guide lists those three differences for Hong Kong SAR (`HKG`), Taiwan, China (`TWN`), Malaysia (`MYS`), Philippines (`PHL`), Indonesia (`IDN`), Vietnam (`VNM`), Thailand (`THA`), Singapore (`SGP`), United Kingdom (`GBR`), Mexico (`MEX`), the United States (`USA`), and Canada (`CAN`).
 
 ## Before you begin
 
@@ -28,7 +28,7 @@ The KYC request uses consistent JSON keys for all supported countries. Country-s
 
 ## Company KYC requirements
 
-For company KYC, set `merchant_type` to `B2B` and provide `company_info`. Do not provide `individual_info` in the same request.
+For company KYC, set `merchant_type` to `B2B` or `B2C` and provide `company_info`. Do not provide `individual_info` in the same request.
 
 ### HKG baseline fields
 
@@ -65,10 +65,10 @@ The `file_type` values below are what the operation accepts. Passing validation 
 | Singapore (`SGP`) | `CI`, `AOA`, `ANNUAL_RETURN`, `BAP`, `SSC` | `PP` | `company_name_en` must include the `Pte Ltd` suffix. |
 | United Kingdom (`GBR`) | `CI`, `AOA`, `ANNUAL_RETURN`, `BAP`, `SSC` | `PP` | The request fields stay the same as `HKG`; omit `BR` and `NNC1`. |
 | Mexico (`MEX`) | `CI`, `AOA`, `ANNUAL_RETURN`, `BAP`, `SSC` | `PP` | The request fields stay the same as `HKG`; omit `BR` and `NNC1`. |
-| United States (`USA`), `B2B` | `CI`, `AOA`, `ANNUAL_RETURN`, `BAP`, `SSC` | `PP` | Omit `BR` and `NNC1`. |
-| United States (`USA`), `B2C` | `CI`, `AOA`, `ANNUAL_RETURN`, `BAP`, `PLATFORM_SCREENSHOT`, `SSC` | `PP` | Use the `B2B` company attachments and also provide `PLATFORM_SCREENSHOT`. Omit `BR` and `NNC1`. |
+| United States (`USA`) | `CI`, `AOA`, `ANNUAL_RETURN`, `BAP`, `SSC` | `PP` | The request fields stay the same as `HKG`; omit `BR` and `NNC1`. |
+| Canada (`CAN`) | `CI`, `AOA`, `ANNUAL_RETURN`, `BAP`, `SSC` | `PP` | The request fields stay the same as `HKG`; omit `BR` and `NNC1`. |
 
-US company KYC supports `B2B` and `B2C`. UBO attachments use `PP` in both cases. `B2C` uses the `B2B` company attachments and also requires `PLATFORM_SCREENSHOT`.
+All countries and regions listed above support `B2B` and `B2C` company KYC. For `B2C`, add `PLATFORM_SCREENSHOT` to the base company attachments listed in the table. This is a required `B2C` baseline attachment; submissions without it fail validation.
 
 For non-mainland China personnel, include `name`, `name_en`, `id_number`, `date_of_birth`, `issue_date`, `expiration_date`, `residential_address`, and `attachments`. For a mainland China identity card, the two sides are `PRC_ID_Emblem` and `PRC_ID_Portrait`.
 
@@ -97,6 +97,7 @@ For individual KYC, set `merchant_type` to `B2C` and provide `individual_info`.
 | Philippines (`PHL`) | `FIC`; `PP` is also accepted. Do not use `HK_PID`. | English | Use the local English city name. | `ID_Hand`, `POA` |
 | Taiwan, China (`TWN`), Malaysia (`MYS`), Indonesia (`IDN`), Vietnam (`VNM`), Thailand (`THA`), Singapore (`SGP`), United Kingdom (`GBR`), Mexico (`MEX`) | `PP`; `FIC` is also accepted. Do not use `HK_PID`. | English | Use the local English city name. | `ID_Hand`, `POA` |
 | United States (`USA`) | `PP`; `FIC` is also accepted. Do not use `HK_PID`. | English | Use the local English city name. | `ID_Hand`, `POA` |
+| Canada (`CAN`) | `PP` or `FIC`; `BACK` is not required. | English | Use the local English city name. | `ID_Hand`, `POA` |
 
 ## Hong Kong address requirements
 
