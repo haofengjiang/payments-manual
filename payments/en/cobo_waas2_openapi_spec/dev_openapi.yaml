@@ -1608,6 +1608,8 @@ paths:
         <Note>If you make transfers from Custodial Wallets (Asset Wallets) and Exchange Wallets, do not set the fee-related properties, as they will not take effects.</Note>
 
         <Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. To do this, you should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       security:
         - CoboAuth: []
         - OAuth2:
@@ -1633,6 +1635,8 @@ paths:
         You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee, or specify the `fee_level` property to let Cobo calculate the transaction fee based on the selected fee level. A transaction request for tracking is returned upon successful operation.
 
         <Note>Currently, this operation only applies to the transactions from MPC Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       security:
         - CoboAuth: []
         - OAuth2:
@@ -1814,6 +1818,8 @@ paths:
         Resending a transaction is a high‑risk operation. Ensure that the original transaction has not been broadcast to the blockchain, has already expired, and will never be confirmed. Otherwise, the same transaction may be confirmed on‑chain twice.
 
         <Note>This operation only applies to transactions from MPC Wallets in the SOL token.</Note>
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       security:
         - CoboAuth: []
         - OAuth2:
@@ -1901,6 +1907,8 @@ paths:
         <Note>This operation only applies to transactions from MPC Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
         You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       security:
         - CoboAuth: []
         - OAuth2:
@@ -1930,6 +1938,8 @@ paths:
         A transaction can be sped up only if its status is `Broadcasting`.
 
         <Note>This operation only applies to transactions from MPC Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       security:
         - CoboAuth: []
         - OAuth2:
@@ -3536,9 +3546,9 @@ paths:
       tags:
         - FeeStation
       operationId: list_fee_station_addresses
-      summary: List Fee Station addresses
+      summary: List Billing Center addresses
       description: |
-        This operation retrieves a list of deposit addresses of your Fee Station, including the chain ID, address, and additional information. You can filter the result by chain ID and address.
+        This operation retrieves a list of deposit addresses of your Billing Center, including the chain ID, address, and additional information. You can filter the result by chain ID and address.
       security:
         - CoboAuth: []
         - OAuth2:
@@ -3561,9 +3571,9 @@ paths:
       tags:
         - FeeStation
       operationId: list_token_balances_for_fee_station
-      summary: List Fee Station token balances
+      summary: List Billing Center token balances
       description: |
-        The operation retrieves a list of token balances within your Fee Station.
+        The operation retrieves a list of token balances within your Billing Center.
       security:
         - CoboAuth: []
         - OAuth2:
@@ -3585,9 +3595,9 @@ paths:
       tags:
         - FeeStation
       operationId: list_fee_station_transactions
-      summary: List all Fee Station transactions
+      summary: List all Billing Center transactions
       description: |
-        This operation retrieves all Fee Station transactions under your organization.
+        This operation retrieves all Billing Center transactions under your organization.
 
         You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamp. You can also paginate and sort your query results.
       security:
@@ -3624,9 +3634,9 @@ paths:
       tags:
         - FeeStation
       operationId: get_fee_station_transaction_by_id
-      summary: Get Fee Station transaction information
+      summary: Get Billing Center transaction information
       description: |
-        This operation retrieves detailed information about a specified Fee Station transaction record, such as the transaction status, source address, destination address, and timestamp.
+        This operation retrieves detailed information about a specified Billing Center transaction record, such as the transaction status, source address, destination address, and timestamp.
       security:
         - CoboAuth: []
         - OAuth2:
@@ -3645,7 +3655,7 @@ paths:
       operationId: estimate_fee_station_fee
       summary: Estimate transaction fee
       description: |
-        <Note>This operation is **deprecated** and retained only for backward compatibility. Use [Check Fee Station usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage) for all new integrations.</Note>
+        <Note>This operation is **deprecated** and retained only for backward compatibility. Use [Check Billing Center usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage) for all new integrations.</Note>
 
         This operation estimates the transaction fee of a token transfer based on the fee model that the chain uses, considering factors such as network congestion and transaction complexity.
 
@@ -3670,9 +3680,9 @@ paths:
       tags:
         - FeeStation
       operationId: list_fee_station_fiat_transactions
-      summary: List Fee Station fiat transactions
+      summary: List Billing Center fiat transactions
       description: |
-        This operation retrieves all Fee Station fiat transactions under your organization.
+        This operation retrieves all Billing Center fiat transactions under your organization.
 
         You can filter the results by request IDs, transaction IDs, transaction type, and created timestamp. You can also paginate your query results.
       security:
@@ -3699,17 +3709,17 @@ paths:
       tags:
         - FeeStation
       operationId: check_fee_station_usage
-      summary: Check Fee Station usage
+      summary: Check Billing Center usage
       description: |
-        This operation evaluates Fee Station usage for the current transaction. 
+        This operation evaluates Billing Center usage for the current transaction. 
 
-        It determines whether Fee station can be used, checks if the Fee Station balance is sufficient, and returns a breakdown of the amounts involved, including any portion that must be covered by the user or sponsored in USD stablecoin.
+        It determines whether Billing Center can be used, checks if the Billing Center balance is sufficient, and returns a breakdown of the amounts involved, including any portion that must be covered by the user or sponsored in USD stablecoin.
       security:
         - CoboAuth: []
         - OAuth2:
             - transaction.estimate_fee
       requestBody:
-        description: The request body for evaluating Fee Station usage.
+        description: The request body for evaluating Billing Center usage.
         content:
           application/json:
             schema:
@@ -4061,7 +4071,10 @@ paths:
         - Payment
       operationId: submit_merchant_kyc
       summary: Submit merchant KYC
+      deprecated: true
       description: |
+        <Note>This operation has been deprecated. Please use [Create fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/create-fiat-entry-kyc) to create KYC information and [Update fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/update-fiat-entry-kyc) to update KYC information instead.</Note>
+
         This operation submits KYC information for a specified merchant.
 
         You need to provide the merchant type, country, and industry.
@@ -4092,7 +4105,10 @@ paths:
         - Payment
       operationId: get_merchant_kyc
       summary: Get merchant KYC
+      deprecated: true
       description: |
+        <Note>This operation has been deprecated. Please use [Get fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/get-fiat-entry-kyc) instead.</Note>
+
         This operation retrieves the KYC submission for a specified merchant.
 
         The merchant ID can be retrieved by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
@@ -4109,6 +4125,116 @@ paths:
           $ref: '#/components/responses/badRequestError'
         5XX:
           $ref: '#/components/responses/internalServerError'
+  /payments/fiat_entry_kyc:
+    post:
+      tags:
+        - Payment
+      operationId: create_fiat_entry_kyc
+      summary: Create fiat entry KYC
+      description: |
+        This operation creates KYC information for a fiat entry.
+
+        You need to provide the merchant type, country, and industry.
+        Provide either `company_info` or `individual_info`:
+        - `company_info`: Required for company merchants.
+        - `individual_info`: Required for individual merchants.
+
+        After a successful creation, use the returned `fiat_entry_kyc_id` when calling
+        [Update fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/update-fiat-entry-kyc)
+        or [Create destination](https://www.cobo.com/developers/v2/api-references/payment/create-destination).
+      security:
+        - CoboAuth: []
+        - OAuth2:
+            - payment_merchant.create
+      requestBody:
+        $ref: '#/components/requestBodies/createFiatEntryKycBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFiatEntryKycResponse'
+        4XX:
+          $ref: '#/components/responses/badRequestError'
+        5XX:
+          $ref: '#/components/responses/internalServerError'
+    get:
+      tags:
+        - Payment
+      operationId: list_fiat_entry_kyc
+      summary: List all fiat entry KYC
+      description: |
+        This operation retrieves all fiat entry KYC records under your organization.
+
+        You can filter results by KYC statuses and use pagination parameters to control the response size.
+      security:
+        - CoboAuth: []
+        - OAuth2:
+            - payment_merchant.read
+      parameters:
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/beforeParam'
+        - $ref: '#/components/parameters/afterParam'
+        - $ref: '#/components/parameters/FiatEntryKycStatusesParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFiatEntryKycResponse'
+        4XX:
+          $ref: '#/components/responses/badRequestError'
+        5XX:
+          $ref: '#/components/responses/internalServerError'
+  '/payments/fiat_entry_kyc/{fiat_entry_kyc_id}':
+    get:
+      tags:
+        - Payment
+      operationId: get_fiat_entry_kyc
+      summary: Get fiat entry KYC
+      description: |
+        This operation retrieves information about a specified fiat entry KYC.
+
+        The fiat entry KYC ID can be retrieved by calling
+        [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc).
+      security:
+        - CoboAuth: []
+        - OAuth2:
+            - payment_merchant.read
+      parameters:
+        - $ref: '#/components/parameters/FiatEntryKycIdPathParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFiatEntryKycResponse'
+        4XX:
+          $ref: '#/components/responses/badRequestError'
+        5XX:
+          $ref: '#/components/responses/internalServerError'
+    put:
+      tags:
+        - Payment
+      operationId: update_fiat_entry_kyc
+      summary: Update fiat entry KYC
+      description: |
+        This operation updates KYC information for a specified fiat entry KYC ID.
+
+        The fiat entry KYC ID can be retrieved by calling
+        [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc)
+        or [Create fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/create-fiat-entry-kyc).
+
+        All fields are optional. Omitted fields keep their existing values.
+        You can pass empty values to clear a field.
+
+        <Note>If the fiat entry KYC status is `Disabled`, this operation cannot be used to update KYC information.</Note>
+      security:
+        - CoboAuth: []
+        - OAuth2:
+            - payment_merchant.update
+      parameters:
+        - $ref: '#/components/parameters/FiatEntryKycIdPathParam'
+      requestBody:
+        $ref: '#/components/requestBodies/updateFiatEntryKycBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/updateFiatEntryKycResponse'
+        4XX:
+          $ref: '#/components/responses/badRequestError'
+        5XX:
+          $ref: '#/components/responses/internalServerError'
   /payments/files:
     post:
       tags:
@@ -4119,10 +4245,11 @@ paths:
       description: |
         <Note>This operation has been deprecated. Please use [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2) instead.</Note>
 
-        This operation uploads a file for payment-related use cases, such as merchant KYC attachments.
+        This operation uploads a file for payment-related use cases, such as fiat entry KYC attachments.
 
         You need to specify the file to upload. After a successful upload, use the returned AWS file link in `file_id` when calling
-        [Submit merchant KYC](https://www.cobo.com/developers/v2/api-references/payment/submit-merchant-kyc).
+        [Create fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/create-fiat-entry-kyc)
+        or [Update fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/update-fiat-entry-kyc).
         The returned file link expires at the time specified by `expired_timestamp`.
       security:
         - CoboAuth: []
@@ -4144,10 +4271,11 @@ paths:
       operationId: upload_payment_file_v2
       summary: Upload file v2
       description: |
-        This operation uploads a file for payment-related use cases, such as merchant KYC attachments.
+        This operation uploads a file for payment-related use cases, such as fiat entry KYC attachments.
 
         You need to encode the file content in Base64 and include it in the JSON request body together with the original file name. After a successful upload, use the returned AWS file link in `file_id` when calling
-        [Submit merchant KYC](https://www.cobo.com/developers/v2/api-references/payment/submit-merchant-kyc).
+        [Create fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/create-fiat-entry-kyc)
+        or [Update fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/update-fiat-entry-kyc).
         The returned file link expires at the time specified by `expired_timestamp`.
       security:
         - CoboAuth: []
@@ -5277,6 +5405,11 @@ paths:
       summary: Create destination
       description: |
         This operation creates a [destination](https://www.cobo.com/payments/en/guides/destinations).
+
+        You can link the destination to a merchant ID or a fiat entry KYC ID.
+        The fiat entry KYC ID can be retrieved by calling
+        [Create fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/create-fiat-entry-kyc)
+        or [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc).
       security:
         - CoboAuth: []
         - OAuth2:
@@ -5311,6 +5444,7 @@ paths:
         - $ref: '#/components/parameters/DestinationTypeOptionalParam'
         - $ref: '#/components/parameters/CountryOptionalParam'
         - $ref: '#/components/parameters/MerchantIdsParam'
+        - $ref: '#/components/parameters/FiatEntryKycIdsParam'
       responses:
         '200':
           $ref: '#/components/responses/listDestinationsResponse'
@@ -6499,7 +6633,7 @@ paths:
       description: |
         This operation creates an auto-sweep task for the specified wallet and token. The task triggers transactions to sweep the full balance of the specified token to the configured sweep-to address.
 
-        <Note>A sweep requires native chain coin to pay for gas. The gas must be available either in the source (deposit) address, or supplied by a configured Fee Station or Auto-Fuel. Reaching the deposit threshold alone does not trigger a sweep. If no gas is available, the sweep is blocked (for example, with an insufficient-balance error) or the Fee Station quota check fails. When a sweep is blocked, the reason is reported in the `failed_reasons` array of the auto-sweep task.</Note>
+        <Note>A sweep requires native chain coin to pay for gas. The gas must be available either in the source (deposit) address, or supplied by a configured Billing Center or Auto-Fuel. Reaching the deposit threshold alone does not trigger a sweep. If no gas is available, the sweep is blocked (for example, with an insufficient-balance error) or the Billing Center quota check fails. When a sweep is blocked, the reason is reported in the `failed_reasons` array of the auto-sweep task.</Note>
 
         <Info>This operation is asynchronous. When the task is created, it is returned with `status` set to `Submitted` and an empty `transaction_ids` array; this is expected and does not indicate a failure. The `transaction_ids` array is populated only after `status` becomes `TransactionCreated`. To retrieve the transaction IDs, poll [Get auto-sweep task details](https://www.cobo.com/developers/v2/api-references/autosweep/get-auto-sweep-task-details) using the returned `task_id` until the status changes.</Info>
       security:
@@ -8382,17 +8516,38 @@ components:
           type: string
           description: 'The estimated fee required for submitting the transaction data to L1 (Layer 1), measured in wei.'
           example: '1000000000000'
+    FeeFallback:
+      type: object
+      description: The fallback information of an estimated transaction fee.
+      properties:
+        fallback:
+          type: boolean
+          description: |
+            Whether the estimated transaction fee is generated by Cobo's fallback mechanism. Cobo uses the fallback mechanism when a normal fee estimation cannot be completed, for example when the blockchain node fails to estimate the gas limit.
+            - `true`: The returned `gas_limit` is produced by Cobo's internal fallback strategy instead of a node estimation. It can differ significantly from the gas units that the transaction actually consumes, and a transaction submitted with this value may fail. Check `fallback_reason` and use the value with caution.
+            - `false`: The returned fee values are generated by a normal fee estimation.
+          example: true
+        fallback_reason:
+          type: string
+          description: |
+            The reason why Cobo's fallback mechanism was used, such as the error message returned by the blockchain node. This property is returned only when `fallback` is `true`.
+          example: 'execution reverted: ERC20: transfer amount exceeds balance'
     SOLBase:
       type: object
       properties:
         base_fee:
           type: string
-          description: 'A fixed fee charged per signature. The default is 5,000 lamports per signature.'
-          example: '0.000005'
+          description: 'A fixed fee, in lamports, charged per signature. The default is 5,000 per signature.'
+          example: '5000'
         rent_amount:
           type: string
-          description: The one-time rent required to activate a Solana token Associated Token Account (ATA) before the token can be received or used. **This field is reserved for future use and is currently not populated.**
-          example: '0.00001'
+          description: |
+            The one-time rent, in lamports, required to create the destination's Associated Token Account (ATA) for this token when it does not exist yet.
+
+            In fee estimate responses, this field returns the current on-chain rent if the destination address has no ATA for the token, and is empty otherwise. You can call [Estimate transaction fee](https://www.cobo.com/developers/v2/api-references/transactions/estimate-transaction-fee) before submitting a transaction to check whether it will incur ATA rent. The result reflects the destination at estimation time; if the ATA is closed before the transaction is built, the transaction still creates it and incurs the rent.
+
+            In transaction records, this field keeps the value estimated when the transaction was created and is not updated from on-chain data. `estimated_fee_used` includes this rent, while `fee_used` does not.
+          example: '1488440'
     SOLComputeUnit:
       type: object
       properties:
@@ -8481,6 +8636,7 @@ components:
             - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
             - $ref: '#/components/schemas/FeeGasLimit'
             - $ref: '#/components/schemas/FeeReserved'
+            - $ref: '#/components/schemas/FeeFallback'
         recommended:
           required:
             - max_fee_per_gas
@@ -8490,6 +8646,7 @@ components:
             - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
             - $ref: '#/components/schemas/FeeGasLimit'
             - $ref: '#/components/schemas/FeeReserved'
+            - $ref: '#/components/schemas/FeeFallback'
         fast:
           required:
             - max_fee_per_gas
@@ -8499,6 +8656,7 @@ components:
             - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
             - $ref: '#/components/schemas/FeeGasLimit'
             - $ref: '#/components/schemas/FeeReserved'
+            - $ref: '#/components/schemas/FeeFallback'
     EstimatedEvmLegacyFee:
       type: object
       description: |
@@ -8525,6 +8683,7 @@ components:
             - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
             - $ref: '#/components/schemas/FeeGasLimit'
             - $ref: '#/components/schemas/FeeReserved'
+            - $ref: '#/components/schemas/FeeFallback'
         recommended:
           required:
             - gas_price
@@ -8533,6 +8692,7 @@ components:
             - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
             - $ref: '#/components/schemas/FeeGasLimit'
             - $ref: '#/components/schemas/FeeReserved'
+            - $ref: '#/components/schemas/FeeFallback'
         fast:
           required:
             - gas_price
@@ -8541,6 +8701,7 @@ components:
             - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
             - $ref: '#/components/schemas/FeeGasLimit'
             - $ref: '#/components/schemas/FeeReserved'
+            - $ref: '#/components/schemas/FeeFallback'
     EstimatedUtxoFee:
       type: object
       description: |
@@ -8975,6 +9136,7 @@ components:
             - $ref: '#/components/schemas/TransactionBIP322Destination'
             - $ref: '#/components/schemas/TransactionCosmosAdr36Destination'
             - $ref: '#/components/schemas/TransactionStellarDestination'
+            - $ref: '#/components/schemas/TransactionSuiDestination'
             - $ref: '#/components/schemas/TransactionTronContractDestination'
           discriminator:
             propertyName: destination_type
@@ -8994,6 +9156,7 @@ components:
               DepositToAddress: '#/components/schemas/TransactionDepositToAddressDestination'
               DepositToWallet: '#/components/schemas/TransactionDepositToWalletDestination'
               STELLAR_Contract: '#/components/schemas/TransactionStellarDestination'
+              SUI_Contract: '#/components/schemas/TransactionSuiDestination'
               TRON_Contract: '#/components/schemas/TransactionTronContractDestination'
         result:
           $ref: '#/components/schemas/TransactionResult'
@@ -9075,11 +9238,11 @@ components:
           description: |
             The transaction category defined by Cobo. Possible values include: 
             - `AutoSweep`: An auto-sweep transaction.
-            - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your wallet.
+            - `AutoFueling`: A transaction where Billing Center pays transaction fees to an address within your wallet.
             - `AutoFuelingRefund`: A refund for an auto-fueling transaction.
-            - `BillPayment`: A transaction to pay Cobo bills through Fee Station.
+            - `BillPayment`: A transaction to pay Cobo bills through Billing Center.
             - `BillRefund`: A refund for a previously made bill payment.
-            - `CommissionFeeCharge`: A transaction to charge commission fees via Fee Station.
+            - `CommissionFeeCharge`: A transaction to charge commission fees via Billing Center.
             - `CommissionFeeRefund`: A refund of previously charged commission fees.
         extra:
           type: array
@@ -9309,6 +9472,7 @@ components:
         - PendingCoboKYTCheck
         - RejectedByCoboKYT
         - PendingCoboTravelRuleCheck
+        - AdditionalInformationRequired
       example: PendingDoubleCheck
       description: |
         The transaction sub-status. For more details, please refer to [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status).
@@ -9725,7 +9889,7 @@ components:
     TransactionFeeStationWalletSource:
       type: object
       description: The information about the transaction source.
-      title: Fee Station
+      title: Billing Center
       required:
         - source_type
         - wallet_id
@@ -9746,6 +9910,7 @@ components:
         - EVM_Contract
         - SOL_Contract
         - STELLAR_Contract
+        - SUI_Contract
         - COSMOS_Contract
         - TRON_Contract
         - EVM_EIP_191_Signature
@@ -10078,6 +10243,18 @@ components:
       example: ChangeTrust
       description: |
         Operations to manage trustlines on the Stellar network.
+    TransactionSuiDestination:
+      title: SUI_Contract
+      type: object
+      description: 'The information about the transaction destination type `SUI_Contract`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.'
+      required:
+        - destination_type
+        - contract_param
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransactionDestinationType'
+        contract_param:
+          $ref: '#/components/schemas/SuiContractCallContractParam'
     TransactionSolContractAccount:
       title: SOL Instruction Account
       type: object
@@ -10760,17 +10937,26 @@ components:
         - DisableAutoFuel
       example: PassiveAutoFuel
       description: |
-        The mode of transaction fee payment using Fee Station. Currently, Fee Station supports eligible transactions made with MPC Wallets and Web3 Wallets on EVM-compatible chains, TRON, and Solana.
-        For more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction).
+        Whether Billing Center pays the on-chain transaction fee for this transaction, and under what condition.
 
-        - `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees.  
-        - `PassiveAutoFuel`: Use Fee Station only when the source address balance is insufficient to cover transaction fees.  
-        - `UsePortalPreference`: Use fueling strategy based on the Portal configuration.  
-        - `DisableAutoFuel`: Do not use Fee Station for transaction fee payment under any circumstances.  
+        On-chain fees are charged in a chain's gas token, which is usually not the token you are sending. Without Billing Center, the source address must hold that gas token or the transaction fails. When Billing Center covers the fee, the source address does not need to hold any gas token.
 
-        If this parameter is **not specified**, it defaults to the behavior of `UsePortalPreference`.
+        For more details, refer to [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction).
 
-        **Note**: TRON and Solana do not support `PassiveAutoFuel` due to their fee delegation mechanisms.
+        **Accepted values**
+
+        - `ProActiveAutoFuel`: Always have Billing Center pay the fee, without touching the gas token in the source address.
+        - `PassiveAutoFuel`: Use the gas token in the source address when it is sufficient; otherwise have Billing Center pay the fee.
+        - `UsePortalPreference`: Follow the per-chain sponsorship rules configured on Cobo Portal, under **Billing Center** > **Settings**.
+        - `DisableAutoFuel`: Never use Billing Center. The transaction pays its fee from the source address and fails if the balance is insufficient.
+
+        If this parameter is **not specified**, it defaults to `UsePortalPreference`.
+
+        **Support and limitations**
+
+        - Applies to transactions from MPC Wallets and Custodial Wallets (Web3 Wallets) on EVM-compatible chains, TRON, Solana, and Tempo. Other chains, such as BTC, are not supported, and the source address must hold the fee itself.
+        - TRON, Solana, and Tempo do not support `PassiveAutoFuel` due to their fee delegation mechanisms.
+        - The per-chain sponsorship rules on Cobo Portal apply only to API transactions that pass `UsePortalPreference`. They do not affect transfers initiated from the Cobo Portal interface.
     SkipCheckType:
       type: string
       enum:
@@ -10894,7 +11080,7 @@ components:
           example: b0530b27-104f-4338-87de-de01500326ea
         main_transaction_id:
           type: string
-          description: The UUID of the parent (main) transaction that this record is associated with. Set only when the current record is a gas/fee transaction initiated by Fee Station; omit for main transactions.
+          description: The UUID of the parent (main) transaction that this record is associated with. Set only when the current record is a gas/fee transaction initiated by Billing Center; omit for main transactions.
           format: uuid
           example: b0530b27-104f-4338-87de-de01500326ea
     TransactionCoboCategory:
@@ -10947,9 +11133,9 @@ components:
       description: |
         The transaction category defined by Cobo. Possible values include: 
           - `AutoSweep`: An auto-sweep transaction.
-          - `AutoFueling`: A transaction where Fee Station automatically pays transaction fees for eligible MPC Wallet and Web3 Wallet transactions.
+          - `AutoFueling`: A transaction where Billing Center automatically pays transaction fees for eligible MPC Wallet and Web3 Wallet transactions.
           - `AutoFuelingRefund`: A refund for an auto-fueling transaction.
-          - `BillPayment`: A transaction to pay Cobo bills through Fee Station.
+          - `BillPayment`: A transaction to pay Cobo bills through Billing Center.
           - `BillRefund`: A refund for a previously made bill payment.
           - `CommissionFeeCharge`: A transaction for commission-fee users that charges the commission fee incurred from various services.
           - `CommissionFeeRefund`: A refund of previously charged commission fees.
@@ -10978,8 +11164,8 @@ components:
           - `TokenSwap`: A transaction for token swapping or cross-chain bridging.
           - `NonceAccountSign`: A transaction signed using a **Solana nonce account**, enabling deterministic and replay-safe transaction execution on the Solana network.  
           - `FeePayerSign`: A transaction where a **designated Solana fee payer account** covers the transaction fees, separating the fee payment from the main signer or source account.
-          - `GasFeeSponsor`: A transaction where Fee Station pays the on-chain gas fee in USD stablecoin.
-          - `GasFeeSponsorRefund`: A transaction that refunds gas fees previously sponsored and paid by Fee Station.
+          - `GasFeeSponsor`: A transaction where Billing Center pays the on-chain gas fee in USD stablecoin.
+          - `GasFeeSponsorRefund`: A transaction that refunds gas fees previously sponsored and paid by Billing Center.
           - `WalletConnect`: A transaction initiated by walletconnect.
           - `JustLendReceiverPrecharge`: A TRX transfer to the receiver address to activate it and compensate for bandwidth fees before the main transaction executes.
           - `JustLendEnergyRental`: A contract call to JustLend's rentResource() to rent TRON energy for the main transaction execution.
@@ -11803,6 +11989,7 @@ components:
         - STELLAR_Contract
         - TRON_Contract
         - COSMOS_Contract
+        - SUI_Contract
       example: EVM_Contract
       description: |
         The type of the contract format. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -12028,6 +12215,64 @@ components:
       example: ChangeTrust
       description: |
         Operations to manage trustlines on the Stellar network.
+    SuiContractCallDestination:
+      title: SUI_Contract
+      type: object
+      description: 'The information about the transaction destination. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.'
+      required:
+        - destination_type
+        - contract_param
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/ContractCallDestinationType'
+        contract_param:
+          $ref: '#/components/schemas/SuiContractCallContractParam'
+    SuiContractCallContractType:
+      type: string
+      enum:
+        - AddressBalance
+      example: AddressBalance
+      description: |
+        The type of the SUI contract type.
+    SuiContractCallContractParam:
+      oneOf:
+        - $ref: '#/components/schemas/SuiContractCallAddressBalanceParam'
+      discriminator:
+        propertyName: contract_type
+        mapping:
+          AddressBalance: '#/components/schemas/SuiContractCallAddressBalanceParam'
+    SuiContractCallAddressBalanceParam:
+      title: Sui_AddressBalance_Param
+      type: object
+      description: Parameters related to SUI address balance operations
+      required:
+        - contract_type
+        - token_id
+        - operation_type
+      properties:
+        contract_type:
+          $ref: '#/components/schemas/SuiContractCallContractType'
+        token_id:
+          type: string
+          description: 'The token ID, which is the unique identifier of a token.'
+          example: SUI
+        operation_type:
+          $ref: '#/components/schemas/SuiContractCallAddressBalanceOperationType'
+        txid:
+          type: string
+          description: |
+            The transaction hash of the deposit to return. Required when `operation_type` is `AddressBalanceRefund`, and must be omitted otherwise. The destination address is resolved from this deposit and cannot be specified.
+          example: 5YajS3ewacVwd1aE7Qkk7sXsstmwwMUiNCeQx22wkGXZ
+    SuiContractCallAddressBalanceOperationType:
+      type: string
+      enum:
+        - AddressBalanceRedeem
+        - AddressBalanceRefund
+      example: AddressBalanceRedeem
+      description: |
+        Address balance operations.
+        - `AddressBalanceRedeem`: Move the address balance into a coin object held by the same address.
+        - `AddressBalanceRefund`: Return a specific deposit from the address balance to the address that sent it.
     ContractCallDestination:
       oneOf:
         - $ref: '#/components/schemas/EvmContractCallDestination'
@@ -12035,6 +12280,7 @@ components:
         - $ref: '#/components/schemas/StellarContractCallDestination'
         - $ref: '#/components/schemas/TronContractCallDestination'
         - $ref: '#/components/schemas/CosmosContractCallDestination'
+        - $ref: '#/components/schemas/SuiContractCallDestination'
       discriminator:
         propertyName: destination_type
         mapping:
@@ -12043,6 +12289,7 @@ components:
           STELLAR_Contract: '#/components/schemas/StellarContractCallDestination'
           TRON_Contract: '#/components/schemas/TronContractCallDestination'
           COSMOS_Contract: '#/components/schemas/CosmosContractCallDestination'
+          SUI_Contract: '#/components/schemas/SuiContractCallDestination'
     ContractCallParams:
       type: object
       description: The information about a transaction that interacts with a smart contract
@@ -12375,6 +12622,12 @@ components:
             - PaymentBankWithdrawal
             - PaymentBulkSend
             - PaymentBulkSendItem
+            - PaymentTopUpUpdate
+            - PaymentOrderUpdate
+            - PaymentRefundUpdate
+            - PaymentPayoutUpdate
+            - PaymentBulkSendUpdate
+            - PaymentBulkSendItemUpdate
             - PaymentAccountBalanceUpdate
             - BalanceUpdateInfo
             - SuspendedToken
@@ -12404,6 +12657,12 @@ components:
             - `PaymentBankWithdrawal`: The payment bank withdrawal event data.
             - `PaymentBulkSend`: The payment bulk send event data.
             - `PaymentBulkSendItem`: The payment bulk send item event data.
+            - `PaymentTopUpUpdate`: The payment top-up update event data.
+            - `PaymentOrderUpdate`: The payment order update event data.
+            - `PaymentRefundUpdate`: The payment refund update event data.
+            - `PaymentPayoutUpdate`: The payment payout update event data.
+            - `PaymentBulkSendUpdate`: The payment bulk send update event data.
+            - `PaymentBulkSendItemUpdate`: The payment bulk send item update event data.
             - `PaymentAccountBalanceUpdate`: The Payments account balance updated event data, including account information and balance change details.
             - `BalanceUpdateInfo`: The balance update event data.
             - `SuspendedToken`: The token suspension event data.
@@ -12434,6 +12693,12 @@ components:
         - $ref: '#/components/schemas/PaymentBankWithdrawalEvent'
         - $ref: '#/components/schemas/PaymentBulkSendEvent'
         - $ref: '#/components/schemas/PaymentBulkSendItemEvent'
+        - $ref: '#/components/schemas/PaymentTopUpUpdateEventData'
+        - $ref: '#/components/schemas/PaymentOrderUpdateEventData'
+        - $ref: '#/components/schemas/PaymentRefundUpdateEventData'
+        - $ref: '#/components/schemas/PaymentPayoutUpdateEventData'
+        - $ref: '#/components/schemas/PaymentBulkSendUpdateEventData'
+        - $ref: '#/components/schemas/PaymentBulkSendItemUpdateEventData'
         - $ref: '#/components/schemas/PaymentAccountBalanceUpdateEventData'
         - $ref: '#/components/schemas/ComplianceDispositionUpdateEventData'
         - $ref: '#/components/schemas/ComplianceKytScreeningsUpdateEventData'
@@ -12462,6 +12727,12 @@ components:
           PaymentBankWithdrawal: '#/components/schemas/PaymentBankWithdrawalEvent'
           PaymentBulkSend: '#/components/schemas/PaymentBulkSendEvent'
           PaymentBulkSendItem: '#/components/schemas/PaymentBulkSendItemEvent'
+          PaymentTopUpUpdate: '#/components/schemas/PaymentTopUpUpdateEventData'
+          PaymentOrderUpdate: '#/components/schemas/PaymentOrderUpdateEventData'
+          PaymentRefundUpdate: '#/components/schemas/PaymentRefundUpdateEventData'
+          PaymentPayoutUpdate: '#/components/schemas/PaymentPayoutUpdateEventData'
+          PaymentBulkSendUpdate: '#/components/schemas/PaymentBulkSendUpdateEventData'
+          PaymentBulkSendItemUpdate: '#/components/schemas/PaymentBulkSendItemUpdateEventData'
           PaymentAccountBalanceUpdate: '#/components/schemas/PaymentAccountBalanceUpdateEventData'
           ComplianceDisposition: '#/components/schemas/ComplianceDispositionUpdateEventData'
           ComplianceKytScreenings: '#/components/schemas/ComplianceKytScreeningsUpdateEventData'
@@ -12769,6 +13040,460 @@ components:
               type: integer
               description: 'The updated time of the bulk send item, represented as a UNIX timestamp in seconds.'
               example: 1744689600
+    PaymentTopUpUpdateEventData:
+      title: Payment Top-up Update Event Data
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventDataType'
+        - type: object
+          required:
+            - transaction_id
+            - merchant_id
+            - payer_id
+            - status
+            - amount
+            - topup_address
+            - created_timestamp
+            - updated_timestamp
+            - custom_payer_id
+            - screening_mode
+            - tx_hash
+            - source_address
+            - message
+            - failed_reason
+          properties:
+            transaction_id:
+              type: string
+              description: The incoming Payment transaction ID.
+              example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            merchant_id:
+              type: string
+              description: The merchant ID associated with the top-up.
+              example: M1001
+            payer_id:
+              type: string
+              description: The payer ID generated by Cobo.
+              example: P20250415T0310056d7aa
+            custom_payer_id:
+              type: string
+              nullable: true
+              description: 'Unique customer identifier on the merchant side, used to allocate a dedicated top-up address'
+              example: O20250304-P1001-1001
+            status:
+              $ref: '#/components/schemas/PaymentPayInStatus'
+            screening_mode:
+              $ref: '#/components/schemas/PaymentScreeningMode'
+            amount:
+              $ref: '#/components/schemas/PaymentAssetAmount'
+            tx_hash:
+              type: string
+              nullable: true
+              description: The blockchain transaction hash.
+              example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+            topup_address:
+              type: string
+              description: The dedicated top-up address that received the funds.
+              example: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+            source_address:
+              type: string
+              nullable: true
+              description: The source address of the incoming transaction.
+              example: '0x1234567890abcdef1234567890abcdef12345678'
+            message:
+              type: string
+              nullable: true
+              description: The action prompt for an `ActionRequired` status.
+              example: Additional information is required before these funds can be credited.
+            failed_reason:
+              $ref: '#/components/schemas/PaymentFailedReason'
+            created_timestamp:
+              type: integer
+              format: int64
+              description: 'The created time of the top-up, represented as a UNIX timestamp in seconds.'
+              example: 1744689000
+            updated_timestamp:
+              type: integer
+              format: int64
+              description: 'The updated time of the top-up, represented as a UNIX timestamp in seconds.'
+              example: 1744689100
+    PaymentOrderUpdateEventData:
+      title: Payment Order Update Event Data
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventDataType'
+        - type: object
+          required:
+            - order_id
+            - psp_order_code
+            - merchant_id
+            - status
+            - receive_address
+            - expired_at
+            - requested_amount
+            - credited_amount
+            - outstanding_amount
+            - transactions
+            - created_timestamp
+            - updated_timestamp
+            - merchant_order_code
+            - notice_type
+          properties:
+            order_id:
+              $ref: '#/components/schemas/OrderId'
+            psp_order_code:
+              type: string
+              description: A unique reference code assigned by the developer to identify this order in their system.
+              example: P20250415001
+            merchant_id:
+              type: string
+              description: The merchant ID associated with the order.
+              example: M1001
+            merchant_order_code:
+              type: string
+              nullable: true
+              description: A unique reference code assigned by the merchant to identify this order in their system.
+              example: M20250415001
+            status:
+              $ref: '#/components/schemas/OrderStatus'
+            notice_type:
+              $ref: '#/components/schemas/PaymentOrderNoticeType'
+            receive_address:
+              type: string
+              description: The recipient wallet address for the payment transaction.
+              example: '0x1234567890abcdef1234567890abcdef12345678'
+            expired_at:
+              type: integer
+              format: int64
+              description: 'The expiration time of the pay-in order, represented as a UNIX timestamp in seconds.'
+              example: 1744693600
+            requested_amount:
+              description: The requested amount.
+              allOf:
+                - $ref: '#/components/schemas/PaymentAssetAmount'
+            credited_amount:
+              description: The credited amount.
+              allOf:
+                - $ref: '#/components/schemas/PaymentAssetAmount'
+            outstanding_amount:
+              description: The outstanding amount.
+              allOf:
+                - $ref: '#/components/schemas/PaymentAssetAmount'
+            transactions:
+              type: array
+              description: The incoming transactions associated with the order.
+              items:
+                $ref: '#/components/schemas/PaymentOrderDeposit'
+            created_timestamp:
+              type: integer
+              format: int64
+              description: 'The created time of the order, represented as a UNIX timestamp in seconds.'
+              example: 1744690000
+            updated_timestamp:
+              type: integer
+              format: int64
+              description: 'The updated time of the order, represented as a UNIX timestamp in seconds.'
+              example: 1744690100
+    PaymentRefundUpdateEventData:
+      title: Payment Refund Update Event Data
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventDataType'
+        - type: object
+          required:
+            - refund_id
+            - status
+            - requested_amount
+            - refund_type
+            - created_timestamp
+            - updated_timestamp
+            - order_id
+            - merchant_id
+            - request_id
+            - to_address
+            - tx_hash
+            - initiator
+            - commission_fee
+            - failed_reason
+          properties:
+            refund_id:
+              type: string
+              description: The refund order ID.
+              example: R20250415-M1001-1001
+            order_id:
+              type: string
+              nullable: true
+              description: Unique identifier of a single order
+              example: O20250304-M1001-1001
+            merchant_id:
+              type: string
+              nullable: true
+              description: The merchant ID associated with the refund.
+              example: M1001
+            request_id:
+              type: string
+              nullable: true
+              description: The request ID for the refund request.
+              example: 123e4567-e89b-12d3-a456-426614174004
+            to_address:
+              type: string
+              nullable: true
+              description: The recipient wallet address for the refund.
+              example: '0x9876543210abcdef1234567890abcdef12345678'
+            status:
+              $ref: '#/components/schemas/RefundStatus'
+            requested_amount:
+              $ref: '#/components/schemas/PaymentAssetAmount'
+            tx_hash:
+              type: string
+              nullable: true
+              description: The blockchain transaction hash.
+              example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+            refund_type:
+              $ref: '#/components/schemas/RefundType'
+            initiator:
+              type: string
+              nullable: true
+              description: The initiator of the refund order.
+              example: ak_test_*********************
+            commission_fee:
+              $ref: '#/components/schemas/PaymentCommissionFeeTotal'
+            failed_reason:
+              $ref: '#/components/schemas/PaymentFailedReason'
+            created_timestamp:
+              type: integer
+              format: int64
+              description: 'The created time of the refund order, represented as a UNIX timestamp in seconds.'
+              example: 1744690400
+            updated_timestamp:
+              type: integer
+              format: int64
+              description: 'The updated time of the refund order, represented as a UNIX timestamp in seconds.'
+              example: 1744690500
+    PaymentPayoutUpdateEventData:
+      title: Payment Payout Update Event Data
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventDataType'
+        - type: object
+          required:
+            - payout_id
+            - request_id
+            - source_account
+            - status
+            - requested_amounts
+            - failed_amounts
+            - requested_target
+            - transactions
+            - created_timestamp
+            - updated_timestamp
+            - initiator
+            - remark
+            - commission_fee
+            - failed_reason
+            - actual_payout_amounts
+          properties:
+            payout_id:
+              type: string
+              description: The payout ID generated by Cobo.
+              example: 123e4567-e89b-12d3-a456-426614174004
+            request_id:
+              type: string
+              description: The request ID for the payout.
+              example: 123e4567-e89b-12d3-a456-426614174005
+            source_account:
+              $ref: '#/components/schemas/PaymentSourceAccount'
+            status:
+              $ref: '#/components/schemas/PaymentPayoutStatus'
+            requested_amounts:
+              type: array
+              description: The amounts requested from the source account.
+              items:
+                $ref: '#/components/schemas/PaymentAssetAmount'
+            failed_amounts:
+              type: array
+              description: The failed amounts in the source assets.
+              items:
+                $ref: '#/components/schemas/PaymentAssetAmount'
+            requested_target:
+              $ref: '#/components/schemas/PaymentPayoutRequestedTarget'
+            transactions:
+              type: array
+              description: The transactions created for the payout.
+              items:
+                $ref: '#/components/schemas/PaymentPayoutTransaction'
+            actual_payout_amounts:
+              type: array
+              description: The amounts actually delivered to the recipient.
+              items:
+                $ref: '#/components/schemas/PaymentAssetOrFiatAmount'
+            initiator:
+              type: string
+              nullable: true
+              description: The initiator of the payout.
+              example: ak_test_*********************
+            commission_fee:
+              $ref: '#/components/schemas/PaymentCommissionFeeTotal'
+            remark:
+              type: string
+              nullable: true
+              description: The remark for the payout.
+              example: Create payouts for customer 123
+            failed_reason:
+              $ref: '#/components/schemas/PaymentFailedReason'
+            created_timestamp:
+              type: integer
+              format: int64
+              description: 'The created time of the payout, represented as a UNIX timestamp in seconds.'
+              example: 1744690700
+            updated_timestamp:
+              type: integer
+              format: int64
+              description: 'The updated time of the payout, represented as a UNIX timestamp in seconds.'
+              example: 1744690800
+    PaymentBulkSendUpdateEventData:
+      title: Payment Bulk Send Update Event Data
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventDataType'
+        - type: object
+          required:
+            - bulk_send_id
+            - source_account
+            - execution_mode
+            - status
+            - item_count
+            - failed_item_count
+            - not_executed_item_count
+            - requested_amounts
+            - completed_amounts
+            - failed_amounts
+            - created_timestamp
+            - updated_timestamp
+            - request_id
+            - description
+            - commission_fee
+            - failed_reason
+          properties:
+            bulk_send_id:
+              type: string
+              description: The bulk send ID.
+              example: 123e4567-e89b-12d3-a456-426614174003
+            request_id:
+              type: string
+              nullable: true
+              description: The request ID.
+              example: 123e4567-e89b-12d3-a456-426614174004
+            source_account:
+              $ref: '#/components/schemas/PaymentSourceAccount'
+            execution_mode:
+              $ref: '#/components/schemas/PaymentBulkSendExecutionMode'
+            status:
+              $ref: '#/components/schemas/PaymentBulkSendStatus'
+            item_count:
+              type: integer
+              description: The total number of items in the bulk send.
+              example: 1000
+            failed_item_count:
+              type: integer
+              description: The number of failed items.
+              example: 60
+            not_executed_item_count:
+              type: integer
+              description: The number of items not executed.
+              example: 40
+            requested_amounts:
+              type: array
+              description: The requested amounts aggregated by asset.
+              items:
+                $ref: '#/components/schemas/PaymentAssetAmount'
+            completed_amounts:
+              type: array
+              description: The amounts of completed items aggregated by asset.
+              items:
+                $ref: '#/components/schemas/PaymentAssetAmount'
+            failed_amounts:
+              type: array
+              description: The amounts of failed and not-executed items aggregated by asset.
+              items:
+                $ref: '#/components/schemas/PaymentAssetAmount'
+            description:
+              type: string
+              nullable: true
+              description: The description for the entire bulk send batch.
+              example: Monthly vendor payments - January 2024
+            commission_fee:
+              $ref: '#/components/schemas/PaymentCommissionFeeTotal'
+            failed_reason:
+              $ref: '#/components/schemas/PaymentFailedReason'
+            created_timestamp:
+              type: integer
+              format: int64
+              description: 'The created time of the bulk send, represented as a UNIX timestamp in seconds.'
+              example: 1744691000
+            updated_timestamp:
+              type: integer
+              format: int64
+              description: 'The updated time of the bulk send, represented as a UNIX timestamp in seconds.'
+              example: 1744691100
+    PaymentBulkSendItemUpdateEventData:
+      title: Payment Bulk Send Item Update Event Data
+      allOf:
+        - $ref: '#/components/schemas/WebhookEventDataType'
+        - type: object
+          required:
+            - bulk_send_item_id
+            - bulk_send_id
+            - status
+            - requested_amount
+            - receiving_address
+            - source_account
+            - created_timestamp
+            - updated_timestamp
+            - request_id
+            - tx_hash
+            - description
+            - failed_reason
+          properties:
+            bulk_send_item_id:
+              type: string
+              description: The bulk send item ID.
+              example: 123e4567-e89b-12d3-a456-426614174003
+            bulk_send_id:
+              type: string
+              description: The ID of the bulk send that contains this item.
+              example: 123e4567-e89b-12d3-a456-426614174004
+            request_id:
+              type: string
+              nullable: true
+              description: The request ID for the item.
+              example: 123e4567-e89b-12d3-a456-426614174005
+            status:
+              $ref: '#/components/schemas/PaymentBulkSendItemStatus'
+            requested_amount:
+              $ref: '#/components/schemas/PaymentAssetAmount'
+            receiving_address:
+              type: string
+              description: The receiving address of the payout item.
+              example: '0x1234567890abcdef1234567890abcdef12345678'
+            tx_hash:
+              type: string
+              nullable: true
+              description: The blockchain transaction hash.
+              example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+            source_account:
+              $ref: '#/components/schemas/PaymentSourceAccount'
+            description:
+              type: string
+              nullable: true
+              description: The description of the payout item.
+              example: 'Invoice #INV-2024-001'
+            failed_reason:
+              $ref: '#/components/schemas/PaymentFailedReason'
+            created_timestamp:
+              type: integer
+              format: int64
+              description: 'The created time of the bulk send item, represented as a UNIX timestamp in seconds.'
+              example: 1744691250
+            updated_timestamp:
+              type: integer
+              format: int64
+              description: 'The updated time of the bulk send item, represented as a UNIX timestamp in seconds.'
+              example: 1744691350
     PaymentAccountBalanceUpdateEventData:
       title: Payment account balance updated Event Data
       description: |-
@@ -12919,6 +13644,12 @@ components:
         - payment.charge.status.updated
         - payment.bulk_send.status.updated
         - payment.bulk_send.item.status.updated
+        - payment.topup.updated
+        - payment.order.updated
+        - payment.refund.updated
+        - payment.payout.updated
+        - payment.bulk_send.updated
+        - payment.bulk_send.item.updated
         - payment.transaction.external.created
         - payment.transaction.external.completed
         - payment.transaction.settlement_network.created
@@ -15958,7 +16689,7 @@ components:
           - `Withdrawal`: A withdrawal transaction.
     FeeStationTransfer:
       type: object
-      description: The information about a Fee Station top-up transaction.
+      description: The information about a Billing Center top-up transaction.
       required:
         - token_id
       properties:
@@ -15993,12 +16724,12 @@ components:
         - CoboOperationStation
       example: CoboOperationStation
       description: |
-        The Fee Station mode used for automatic gas payment:
-        - `FeeStation`: The user uses their own Fee Station balance to cover the gas fee. 
+        The Billing Center mode used for automatic gas payment:
+        - `FeeStation`: The user uses their own Billing Center balance to cover the gas fee. 
         - `CoboOperationStation`: Cobo covers the gas fee on behalf of the user.
     FeeStationCheckFeeStationUsage:
       type: object
-      description: The information for evaluating Fee Station usage.
+      description: The information for evaluating Billing Center usage.
       required:
         - request_id
         - estimated_fee_amount
@@ -16024,7 +16755,7 @@ components:
           example: ETH
         estimated_fee_amount:
           type: string
-          description: 'The estimated transaction fee required for this transfer, before applying any Fee Station rules.'
+          description: 'The estimated transaction fee required for this transfer, before applying any Billing Center rules.'
           example: '0.0021'
         from_address:
           type: string
@@ -16056,17 +16787,17 @@ components:
           example: ETH
         balance:
           type: string
-          description: The current token balance available in Fee Station.
+          description: The current token balance available in Billing Center.
           example: '0.0021'
         gas_station_type:
           $ref: '#/components/schemas/FeeStationGasStationType'
         is_fee_station_applicable:
           type: boolean
-          description: Indicates whether Fee Station is applied for this transfer request.
+          description: Indicates whether Billing Center is applied for this transfer request.
           example: true
         is_balance_sufficient:
           type: boolean
-          description: 'If Fee Station is used, indicates whether its balance is sufficient to cover the required gas fee.'
+          description: 'If Billing Center is used, indicates whether its balance is sufficient to cover the required gas fee.'
           example: false
         total_fee_amount:
           type: string
@@ -16074,7 +16805,7 @@ components:
           example: '0.0021'
         is_sponsor_applicable:
           type: boolean
-          description: Indicates whether USD stablecoin sponsorship is applied when the Fee Station balance is insufficient.
+          description: Indicates whether USD stablecoin sponsorship is applied when the Billing Center balance is insufficient.
           example: true
         sponsored_fee_amount:
           type: string
@@ -17343,6 +18074,16 @@ components:
         fee_amount:
           type: string
           description: 'The amount of the commission fee charged by Cobo for operations such as pay-ins and payouts, in USD.'
+    PaymentCommissionFeeTotal:
+      type: object
+      nullable: true
+      required:
+        - fee_amount
+      properties:
+        fee_amount:
+          type: string
+          description: The commission fee amount.
+          example: '0.1'
     OtcFee:
       type: object
       required:
@@ -17407,7 +18148,8 @@ components:
           items:
             type: string
           example:
-            - E-commerce
+            - Intangible Goods & Service
+            - 'Websites, IT & Software'
         company_info:
           $ref: '#/components/schemas/MerchantKycCompanyInfo'
         individual_info:
@@ -17462,7 +18204,8 @@ components:
           items:
             type: string
           example:
-            - E-commerce
+            - Intangible Goods & Service
+            - 'Websites, IT & Software'
         company_info:
           $ref: '#/components/schemas/MerchantKycCompanyInfo'
         individual_info:
@@ -17562,7 +18305,7 @@ components:
           format: uuid
           description: |
             The file ID of the uploaded file, which you can retrieve by calling
-            [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+            [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2).
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         file_type:
           $ref: '#/components/schemas/MerchantKycCompanyAttachmentFileType'
@@ -17576,7 +18319,7 @@ components:
           type: string
           description: |
             The AWS file link of the uploaded file, which you can retrieve by calling
-            [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+            [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2).
           example: 'https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg'
         file_type:
           $ref: '#/components/schemas/MerchantKycPersonAttachmentFileType'
@@ -17727,6 +18470,371 @@ components:
           description: The ultimate beneficial owner information.
           items:
             $ref: '#/components/schemas/MerchantKycPersonInfo'
+        online_store_url:
+          type: string
+          description: The online store URL. Required when merchant type is B2B.
+          example: 'https://example.com/store'
+    CreateFiatEntryKyc:
+      type: object
+      required:
+        - merchant_type
+        - country
+        - industry
+      properties:
+        merchant_type:
+          $ref: '#/components/schemas/FiatEntryKycMerchantType'
+        country:
+          $ref: '#/components/schemas/FiatEntryKycCountry'
+        industry:
+          type: array
+          description: The industry categories of the fiat entry KYC.
+          items:
+            type: string
+          example:
+            - Intangible Goods & Service
+            - 'Websites, IT & Software'
+        company_info:
+          $ref: '#/components/schemas/FiatEntryKycCompanyInfo'
+        individual_info:
+          $ref: '#/components/schemas/FiatEntryKycPersonInfo'
+    UpdateFiatEntryKyc:
+      type: object
+      description: |
+        The request body to update fiat entry KYC information.
+
+        All fields are optional. Omitted fields keep their existing values.
+        You can pass empty values to clear a field.
+      properties:
+        merchant_type:
+          $ref: '#/components/schemas/FiatEntryKycMerchantType'
+        country:
+          $ref: '#/components/schemas/FiatEntryKycCountry'
+        industry:
+          type: array
+          description: The industry categories of the fiat entry KYC.
+          items:
+            type: string
+          example:
+            - Intangible Goods & Service
+            - 'Websites, IT & Software'
+        company_info:
+          $ref: '#/components/schemas/FiatEntryKycCompanyInfo'
+        individual_info:
+          $ref: '#/components/schemas/FiatEntryKycPersonInfo'
+    FiatEntryKyc:
+      type: object
+      required:
+        - fiat_entry_kyc_id
+        - status
+      properties:
+        fiat_entry_kyc_id:
+          type: string
+          format: uuid
+          description: The fiat entry KYC ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        status:
+          $ref: '#/components/schemas/FiatEntryKycStatus'
+    FiatEntryKycDetail:
+      type: object
+      required:
+        - fiat_entry_kyc_id
+        - status
+        - merchant_type
+        - country
+        - industry
+        - created_timestamp
+      properties:
+        fiat_entry_kyc_id:
+          type: string
+          format: uuid
+          description: The fiat entry KYC ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        status:
+          $ref: '#/components/schemas/FiatEntryKycStatus'
+        merchant_type:
+          $ref: '#/components/schemas/FiatEntryKycMerchantType'
+        country:
+          $ref: '#/components/schemas/FiatEntryKycCountry'
+        industry:
+          type: array
+          description: The industry categories of the fiat entry KYC.
+          items:
+            type: string
+          example:
+            - Intangible Goods & Service
+            - 'Websites, IT & Software'
+        email:
+          type: string
+          description: The email address.
+          example: user@example.com
+        phone:
+          type: string
+          description: The phone number.
+          example: '+85212345678'
+        company_info:
+          $ref: '#/components/schemas/FiatEntryKycCompanyInfo'
+        individual_info:
+          $ref: '#/components/schemas/FiatEntryKycPersonInfo'
+        created_timestamp:
+          type: integer
+          format: int64
+          description: The creation timestamp in Unix seconds.
+          example: 1744689600
+        updated_timestamp:
+          type: integer
+          format: int64
+          description: The last update timestamp in Unix seconds.
+          example: 1744689600
+    FiatEntryKycStatus:
+      type: string
+      enum:
+        - PendingReview
+        - Completed
+        - Failed
+        - Disabled
+      example: PendingReview
+      description: |
+        The fiat entry KYC status. Possible values include:
+        - `PendingReview`: The fiat entry KYC is pending review.
+        - `Completed`: The fiat entry KYC has been completed.
+        - `Failed`: The fiat entry KYC has failed.
+        - `Disabled`: The fiat entry KYC is disabled and cannot be updated.
+    FiatEntryKycMerchantType:
+      type: string
+      enum:
+        - B2B
+        - B2C
+      example: B2B
+      description: |
+        The merchant type. Possible values include:
+        - `B2B`: Business-to-business merchant.
+        - `B2C`: Business-to-consumer merchant.
+    FiatEntryKycCountry:
+      type: string
+      description: 'The country/region of the fiat entry KYC, in ISO 3166-1 alpha-3 format.'
+      example: HKG
+    FiatEntryKycCompanyType:
+      type: string
+      enum:
+        - Corporation
+        - Partnership
+        - IICH
+        - Limited Company
+        - Others
+      example: Corporation
+      description: The company type.
+    FiatEntryKycCompanyAttachmentFileType:
+      type: string
+      enum:
+        - BI
+        - BR
+        - CI
+        - NNC1
+        - NAR
+        - SSC
+        - AOA
+        - Other
+        - BAP
+        - ANNUAL_RETURN
+        - PLATFORM_SCREENSHOT
+        - BUSINESS_DOCUMENT
+      example: BR
+      description: The company attachment file type.
+    FiatEntryKycPersonAttachmentFileType:
+      type: string
+      enum:
+        - PRC_ID_Emblem
+        - PRC_ID_Portrait
+        - OIC
+        - PP
+        - FIC
+        - HK_RP
+        - HK_MTP
+        - HK_PP
+        - HK_PID
+        - HKM_RP
+        - HK/Mac_MTP
+        - BACK
+        - ID_Hand
+        - POA
+      example: PRC_ID_Emblem
+      description: The person attachment file type.
+    FiatEntryKycCompanyAttachment:
+      type: object
+      required:
+        - file_id
+        - file_type
+      properties:
+        file_id:
+          type: string
+          format: uuid
+          description: |
+            The file ID of the uploaded file, which you can retrieve by calling
+            [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2).
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        file_type:
+          $ref: '#/components/schemas/FiatEntryKycCompanyAttachmentFileType'
+    FiatEntryKycPersonAttachment:
+      type: object
+      required:
+        - file_id
+        - file_type
+      properties:
+        file_id:
+          type: string
+          description: |
+            The AWS file link of the uploaded file, which you can retrieve by calling
+            [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2).
+          example: 'https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg'
+        file_type:
+          $ref: '#/components/schemas/FiatEntryKycPersonAttachmentFileType'
+    FiatEntryKycAddress:
+      type: object
+      required:
+        - country
+        - state
+        - city
+        - postcode
+        - line1
+      properties:
+        country:
+          type: string
+          description: The country.
+          example: HK
+        state:
+          type: string
+          description: The state or province.
+          example: Hong Kong
+        city:
+          type: string
+          description: The city.
+          example: Hong Kong
+        postcode:
+          type: string
+          description: The postal code.
+          example: '999077'
+        line1:
+          type: string
+          description: The address line.
+          example: 1 Example Street
+    FiatEntryKycPersonInfo:
+      type: object
+      required:
+        - name
+        - name_en
+        - id_number
+        - date_of_birth
+        - issue_date
+        - expiration_date
+        - attachments
+        - residential_address
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          description: The name or title of an identification document.
+          example: 张三
+        name_en:
+          type: string
+          maxLength: 64
+          description: The English-language equivalent of the identification document's name.
+          example: Zhang San
+        id_number:
+          type: string
+          maxLength: 64
+          description: The unique identification number associated with the identification document.
+          example: '110101199001011234'
+        date_of_birth:
+          type: string
+          maxLength: 64
+          description: |
+            The date of birth of the individual, usually in the format YYYYMMDD.
+          example: '20290322'
+        issue_date:
+          type: string
+          maxLength: 64
+          description: |
+            The issue date refers to the date when a document, such as an identification card or passport,
+            was officially issued or granted, usually in the format YYYYMMDD.
+          example: '20290322'
+        expiration_date:
+          type: string
+          maxLength: 64
+          description: |
+            The expiration date refers to the date when a document, such as an identification card or passport,
+            is no longer valid or legally usable, usually in the format YYYYMMDD.
+          example: '20290322'
+        attachments:
+          type: array
+          description: |
+            Additional files or documents associated with a message or record to provide extra information or context.
+          items:
+            $ref: '#/components/schemas/FiatEntryKycPersonAttachment'
+        residential_address:
+          $ref: '#/components/schemas/FiatEntryKycAddress'
+    FiatEntryKycCompanyInfo:
+      type: object
+      required:
+        - company_type
+        - listed
+        - attachments
+        - operation_address
+        - identify_no
+        - company_name
+        - company_name_en
+        - establish_date
+        - commencement_date
+        - valid_period
+        - register_address
+        - legal_info
+        - ubo_infos
+      properties:
+        company_type:
+          $ref: '#/components/schemas/FiatEntryKycCompanyType'
+        listed:
+          type: boolean
+          description: Whether the company is listed.
+          example: false
+        attachments:
+          type: array
+          description: The attachments of the company.
+          items:
+            $ref: '#/components/schemas/FiatEntryKycCompanyAttachment'
+        operation_address:
+          $ref: '#/components/schemas/FiatEntryKycAddress'
+        identify_no:
+          type: string
+          description: The company identification number.
+          example: '12345678'
+        company_name:
+          type: string
+          description: The company name in local language.
+          example: 示例有限公司
+        company_name_en:
+          type: string
+          description: The company name in English.
+          example: Example Limited
+        establish_date:
+          type: string
+          description: The establishment date of the company.
+          example: '20290322'
+        commencement_date:
+          type: string
+          description: The commencement date of the company.
+          example: '20290322'
+        valid_period:
+          type: string
+          description: The valid period of the company registration.
+          example: '20290322'
+        register_address:
+          $ref: '#/components/schemas/FiatEntryKycAddress'
+        legal_info:
+          $ref: '#/components/schemas/FiatEntryKycPersonInfo'
+        ubo_infos:
+          type: array
+          description: The ultimate beneficial owner information.
+          items:
+            $ref: '#/components/schemas/FiatEntryKycPersonInfo'
         online_store_url:
           type: string
           description: The online store URL. Required when merchant type is B2B.
@@ -18252,6 +19360,11 @@ components:
           type: string
           description: The ID of the merchant linked to the destination.
           example: M1001
+        fiat_entry_kyc_id:
+          type: string
+          format: uuid
+          description: The fiat entry KYC ID linked to the destination.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         created_timestamp:
           type: integer
           description: 'The created time of the destination, represented as a UNIX timestamp in seconds.'
@@ -18398,7 +19511,7 @@ components:
       description: |
         The file ID of the contract document (e.g., cooperation agreement) that proves
         the business relationship between you and the beneficiary, which you can retrieve by calling
-        [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+        [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2).
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
     CreateWalletAddress:
       type: object
@@ -18639,6 +19752,11 @@ components:
           type: string
           description: The ID of the merchant linked to the destination.
           example: M1001
+        fiat_entry_kyc_id:
+          type: string
+          format: uuid
+          description: The fiat entry KYC ID linked to the destination.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         created_timestamp:
           type: integer
           description: 'The created time of the destination, represented as a UNIX timestamp in seconds.'
@@ -19599,6 +20717,258 @@ components:
         - When the account is a merchant account, this is the merchant ID (merchant code), which you can retrieve by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
         - When the account is the developer account, use `developer`.
       example: M1001
+    PaymentSourceAccount:
+      type: string
+      description: 'The Payments account from which the funds are debited: the merchant ID for a merchant account, or `developer` for the developer account.'
+      example: M1001
+    PaymentCustomPayerId:
+      type: string
+      description: 'Unique customer identifier on the merchant side, used to allocate a dedicated top-up address.'
+      example: O20250304-P1001-1001
+    PaymentAssetAmount:
+      type: object
+      description: A cryptocurrency asset amount.
+      required:
+        - amount
+        - token_id
+        - chain_id
+      properties:
+        amount:
+          type: string
+          description: 'The amount of the asset, represented as a decimal string.'
+          example: '100.00'
+        token_id:
+          type: string
+          description: The token ID of the asset.
+          example: ETH_USDC
+        chain_id:
+          type: string
+          description: The chain ID of the asset.
+          example: ETH
+    PaymentAssetOrFiatAmount:
+      type: object
+      required:
+        - amount_type
+        - amount
+      properties:
+        amount_type:
+          type: string
+          enum:
+            - Crypto
+            - Fiat
+          description: The amount representation type.
+          example: Crypto
+        amount:
+          type: string
+          description: 'The amount, represented as a decimal string.'
+          example: '100.00'
+        token_id:
+          type: string
+          description: The token ID of the asset. This field is present when `amount_type` is `Crypto`.
+          example: ETH_USDC
+        chain_id:
+          type: string
+          description: The chain ID of the asset. This field is present when `amount_type` is `Crypto`.
+          example: ETH
+        currency:
+          type: string
+          description: The fiat currency code. This field is present when `amount_type` is `Fiat`.
+          example: USD
+      description: An amount represented either as a cryptocurrency asset or a fiat currency.
+    PaymentFailedReason:
+      type: object
+      nullable: true
+      description: The structured failure reason.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: |
+            The failure code.
+          example: transaction.rejected_by_policy
+        message:
+          type: string
+          description: The failure message.
+          example: The transaction was rejected by a transaction policy.
+    PaymentPayInStatus:
+      type: string
+      enum:
+        - Detected
+        - PendingScreening
+        - ActionRequired
+        - Completed
+        - Failed
+      example: Detected
+      description: |
+        The business status of a pay-in transaction:
+        - `Detected`: The incoming transaction has been detected but the funds are not yet available.
+        - `PendingScreening`: The incoming transaction is awaiting a screening result.
+        - `ActionRequired`: Action from the customer is required before processing can continue.
+        - `Completed`: The funds are available for the corresponding Payments business object.
+        - `Failed`: The incoming transaction cannot be credited.
+    PaymentScreeningMode:
+      type: string
+      nullable: true
+      enum:
+        - CoboKyt
+        - IntegratedVendor
+        - CustomVendor
+      example: CoboKyt
+      description: The screening service that reviews the incoming transaction
+    PaymentOrderNoticeType:
+      type: string
+      nullable: true
+      enum:
+        - PaymentUpdated
+        - PaymentFailed
+        - LatePaymentReceived
+      example: PaymentUpdated
+      description: |
+        The reason an order update is sent when the order's primary status does not change:
+        - `PaymentUpdated`: A related incoming transaction requires customer action.
+        - `PaymentFailed`: A related incoming transaction failed and cannot be credited to the order.
+        - `LatePaymentReceived`: An incoming transaction was completed after the order had already reached a terminal status.
+    PaymentOrderDeposit:
+      type: object
+      required:
+        - transaction_id
+        - tx_hash
+        - amount
+        - source_address
+        - status
+        - is_late
+        - screening_mode
+        - message
+        - failed_reason
+      properties:
+        transaction_id:
+          type: string
+          description: The incoming Payment transaction ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+        tx_hash:
+          type: string
+          nullable: true
+          description: The blockchain transaction hash.
+          example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+        amount:
+          $ref: '#/components/schemas/PaymentAssetAmount'
+        source_address:
+          type: string
+          nullable: true
+          description: The source address of the incoming transaction.
+          example: '0x1234567890abcdef1234567890abcdef12345678'
+        status:
+          $ref: '#/components/schemas/PaymentPayInStatus'
+        screening_mode:
+          $ref: '#/components/schemas/PaymentScreeningMode'
+        is_late:
+          type: boolean
+          description: Whether the incoming transaction completed after the order reached a terminal status.
+          example: false
+        message:
+          type: string
+          nullable: true
+          description: The action prompt for an `ActionRequired` status.
+          example: Additional information is required before these funds can be credited.
+        failed_reason:
+          $ref: '#/components/schemas/PaymentFailedReason'
+    PaymentPayoutTransactionResult:
+      type: string
+      nullable: true
+      enum:
+        - Completed
+        - Failed
+      example: Completed
+      description: |
+        The result of a payout transaction:
+        - `Completed`: The transaction completed successfully.
+        - `Failed`: The transaction did not complete successfully.
+    PaymentPayoutTransaction:
+      type: object
+      required:
+        - transaction_id
+        - amount
+        - tx_hash
+        - result
+        - failed_reason
+      properties:
+        transaction_id:
+          type: string
+          description: The WaaS transaction ID.
+          example: 3f9c1d72-8b45-4e6a-9c13-7d2e5a8f4b60
+        amount:
+          description: The transaction amount.
+          allOf:
+            - $ref: '#/components/schemas/PaymentAssetAmount'
+        tx_hash:
+          type: string
+          nullable: true
+          description: The blockchain transaction hash.
+          example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+        result:
+          $ref: '#/components/schemas/PaymentPayoutTransactionResult'
+        failed_reason:
+          $ref: '#/components/schemas/PaymentFailedReason'
+    PaymentPayoutAddressTarget:
+      type: object
+      required:
+        - target_type
+        - address
+        - chain_id
+      properties:
+        target_type:
+          type: string
+          enum:
+            - Address
+          description: The type of the payout target.
+          example: Address
+        address:
+          type: string
+          description: The recipient address.
+          example: '0x9876543210abcdef1234567890abcdef12345678'
+        chain_id:
+          type: string
+          description: The chain ID of the recipient address.
+          example: ETH
+    PaymentPayoutBankAccountTarget:
+      type: object
+      required:
+        - target_type
+        - bank_account_id
+      properties:
+        target_type:
+          type: string
+          enum:
+            - BankAccount
+          description: The type of the payout target.
+          example: BankAccount
+        bank_account_id:
+          type: string
+          description: The recipient bank account ID.
+          example: 123e4567-e89b-12d3-a456-426614174003
+        account_alias:
+          type: string
+          description: The alias of the recipient bank account.
+          example: Main Payout Account
+        bank_name:
+          type: string
+          description: The recipient bank name.
+          example: ABC Bank
+        currency:
+          type: string
+          description: The currency of the recipient bank account.
+          example: USD
+    PaymentPayoutRequestedTarget:
+      oneOf:
+        - $ref: '#/components/schemas/PaymentPayoutAddressTarget'
+        - $ref: '#/components/schemas/PaymentPayoutBankAccountTarget'
+      discriminator:
+        propertyName: target_type
+        mapping:
+          Address: '#/components/schemas/PaymentPayoutAddressTarget'
+          BankAccount: '#/components/schemas/PaymentPayoutBankAccountTarget'
     PaymentBalanceFlowDirection:
       type: string
       enum:
@@ -19623,6 +20993,7 @@ components:
         - Allocation
         - SettlementNetwork
         - BulkSend
+        - OnrampIn
       example: OrderIn
       description: |
         The source type of the balance change. Possible values include:
@@ -19637,6 +21008,7 @@ components:
         - `Allocation`: Balance change from an allocation.
         - `SettlementNetwork`: Balance change from the settlement network.
         - `BulkSend`: Balance change from a bulk send.
+        - `OnrampIn`: Balance change from an onramp.
     PaymentBalanceChange:
       type: object
       required:
@@ -22506,9 +23878,7 @@ components:
           description: |
             A list of unique custom payer IDs required to create top-up addresses.
           items:
-            type: string
-            description: 'Unique customer identifier on the merchant side, used to allocate a dedicated top-up address.'
-            example: O20250304-P1001-1001
+            $ref: '#/components/schemas/PaymentCustomPayerId'
     SweepToAddress:
       type: object
       description: Information about the sweep-to address.
@@ -24043,7 +25413,7 @@ components:
       in: query
       required: false
       description: |
-        A list of transaction types for Fee Station, separated by comma. Possible values include: 
+        A list of transaction types for Billing Center, separated by comma. Possible values include: 
           - `Deposit`: A deposit transaction.
           - `Withdrawal`: A withdrawal transaction.
       schema:
@@ -24154,6 +25524,38 @@ components:
       schema:
         type: string
       example: M1001
+    FiatEntryKycIdPathParam:
+      name: fiat_entry_kyc_id
+      in: path
+      required: true
+      description: |
+        The fiat entry KYC ID, which you can retrieve by calling
+        [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc).
+      schema:
+        type: string
+        format: uuid
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+    FiatEntryKycIdsParam:
+      name: fiat_entry_kyc_ids
+      in: query
+      required: false
+      description: A list of fiat entry KYC IDs to query.
+      schema:
+        type: string
+      example: 'f47ac10b-58cc-4372-a567-0e02b2c3d479,c9bf9e57-1685-4c89-bafb-ff5af830be8a'
+    FiatEntryKycStatusesParam:
+      name: statuses
+      in: query
+      required: false
+      description: |
+        A list of fiat entry KYC statuses, separated by comma. Possible values include:
+        - `PendingReview`: The fiat entry KYC is pending review.
+        - `Completed`: The fiat entry KYC has been completed.
+        - `Failed`: The fiat entry KYC has failed.
+        - `Disabled`: The fiat entry KYC is disabled and cannot be updated.
+      schema:
+        type: string
+      example: 'PendingReview,Completed'
     MerchantIdsParam:
       name: merchant_ids
       in: query
@@ -25528,6 +26930,27 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SubmitMerchantKyc'
+    createFiatEntryKycBody:
+      description: |
+        The request body to create fiat entry KYC information.
+
+        Provide either `company_info` or `individual_info`:
+        - `company_info`: Required for company merchants.
+        - `individual_info`: Required for individual merchants.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateFiatEntryKyc'
+    updateFiatEntryKycBody:
+      description: |
+        The request body to update fiat entry KYC information.
+
+        All fields are optional. Omitted fields keep their existing values.
+        You can pass empty values to clear a field.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateFiatEntryKyc'
     uploadPaymentFileBody:
       description: The request body to upload a file.
       content:
@@ -25973,6 +27396,13 @@ components:
                 type: string
                 description: The ID of the merchant linked to the destination.
                 example: M1001
+              fiat_entry_kyc_id:
+                type: string
+                format: uuid
+                description: |
+                  The fiat entry KYC ID linked to the destination, which you can retrieve by calling
+                  [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc).
+                example: f47ac10b-58cc-4372-a567-0e02b2c3d479
               country:
                 type: string
                 description: 'The country of the destination, in ISO 3166-1 alpha-3 format.'
@@ -26005,6 +27435,13 @@ components:
                 type: string
                 description: The ID of the merchant linked to the destination.
                 example: M1001
+              fiat_entry_kyc_id:
+                type: string
+                format: uuid
+                description: |
+                  The fiat entry KYC ID linked to the destination, which you can retrieve by calling
+                  [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc).
+                example: f47ac10b-58cc-4372-a567-0e02b2c3d479
               country:
                 type: string
                 description: 'The country of the destination, in ISO 3166-1 alpha-3 format.'
@@ -26376,7 +27813,7 @@ components:
                   chain_id: ETH
                   transaction_id: Test-transaction-id
     estimateFeeStationFeeBody:
-      description: The information about a Fee Station top-up transaction.
+      description: The information about a Billing Center top-up transaction.
       content:
         application/json:
           schema:
@@ -28120,6 +29557,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MerchantKycSubmission'
+    createFiatEntryKycResponse:
+      description: The request was successful.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FiatEntryKyc'
+    listFiatEntryKycResponse:
+      description: The request was successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FiatEntryKyc'
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+    getFiatEntryKycResponse:
+      description: The request was successful.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FiatEntryKycDetail'
+    updateFiatEntryKycResponse:
+      description: The request was successful.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FiatEntryKyc'
     uploadPaymentFileResponse:
       description: The request was successful.
       content:
